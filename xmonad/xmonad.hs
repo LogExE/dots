@@ -12,7 +12,7 @@ import XMonad.Prompt.Shell
 import XMonad.Layout.Spacing
 import Graphics.X11.ExtraTypes.XF86
 
-main = xmonad . withEasySB mySB defToggleStrutsKey . docks . ewmhFullscreen . ewmh $ myConf
+main = xmonad . withEasySB mySB defToggleStrutsKey . ewmhFullscreen . ewmh . docks $ myConf
 
 mySB = statusBarProp "xmobar" (pure xmobarPP)
 
@@ -35,7 +35,7 @@ myConf = def
 
 --myWorkspaces = ["stuff", "mesg"]
 
-myTerminal = "alacritty"
+myTerminal = "kitty"
 
 myShellConf = def
               { promptBorderWidth = 1
@@ -45,7 +45,7 @@ myShellConf = def
 
 myModMask = mod4Mask
 
-myLayoutHook = spacing 10 $ layoutHook def
+myLayoutHook = spacing 10 . avoidStruts . layoutHook $ def
 
 myManageHook = composeAll . concat $
                [ [className =? c --> doFloat | c <- floatingClasses]
